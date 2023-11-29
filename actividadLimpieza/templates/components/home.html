@@ -1,0 +1,23 @@
+{% extends 'components/navbar.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <div class="bg-success bg-opacity-25 text-center" style="height: 680px">
+        <br>
+        <h4>
+            {{ user.username | upper }}, bienvenido
+        </h4>
+    </div>
+{% else %}
+<div class="text-center bg-success bg-opacity-25 " style="height: 690px">
+    <br>
+<h1>Bienvenido, Inicia sesion o registrate</h1>
+    <a href="{% url 'login' %}" class="btn btn-primary">Iniciar sesion</a>
+    <a href="{% url 'register' %}" class="btn btn-primary">Registrarse</a>
+</div>
+{% endif %}
+
+
+
+{% endblock %}

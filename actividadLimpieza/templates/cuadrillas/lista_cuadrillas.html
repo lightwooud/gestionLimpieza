@@ -1,0 +1,50 @@
+{% extends 'components/navbar.html' %} 
+
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="bg-success bg-opacity-25" style="height: 690px" > 
+    <br> 
+    <h2 class="text-center">Lista de Cuadrillas</h2>
+
+    <div class="container d-flex justify-content-center">
+    <table class="table table-striped mt-3 justify-content-center">
+        <tr>
+            <th>Número de Cuadrilla</th>
+            <th>Jefe de Cuadrilla</th>
+            <th>Empleados</th>
+            {% if request.user.rol == 'ADMINISTRADOR' %}
+                <th>Acciones</th>
+            {% endif %}
+        </tr>
+        {% for cuadrilla in cuadrillas %}
+        <tr>
+            <td>{{ cuadrilla.numero_cuadrilla }}</td>
+            <td>{{ cuadrilla.jefe_cuadrilla }}</td>
+            <td>
+                {% for empleado in cuadrilla.empleados.all %}
+                    {{ empleado.empleado }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+            
+            {% if request.user.rol == 'ADMINISTRADOR' %}
+                <td><a href="{% url 'editar_cuadrilla' cuadrilla.id %}" class="btn btn-primary btn-sm">Editar</a></td>
+            {% endif %}    
+        </tr>
+        {% endfor %}
+    </table>
+    </div>
+
+        {% if request.user.rol == 'ADMINISTRADOR' %}
+            <a href="{% url 'cuadrilla' %}" class="btn btn-success  container d-flex justify-content-center">Agregar Cuadrilla</a>
+        {% endif %}
+
+    {% else %}
+    <div class="text-center  bg-success bg-opacity-25" style="height: 690px">
+        <br>
+        <h1>Por favor inicia sesion</h1>
+        <a href="{% url 'login' %}" class="btn btn-primary">Iniciar sesion</a>
+
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

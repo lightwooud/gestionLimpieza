@@ -1,0 +1,35 @@
+{% extends 'components/navbar.html' %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<h3>REGISTRO DE CUADRILLA</h3>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ cuadrilla_form | crispy }}
+    <button type="submit">Guardar</button>
+</form>
+
+<script>
+    let contadorEmpleados = 1;
+    
+    function agregarEmpleado() {
+        var original = document.getElementById('empleado-form-0'); 
+        var clone = original.cloneNode(true);
+        clone.id = 'empleado-form-' + contadorEmpleados; 
+    
+       
+        var select = clone.getElementsByTagName('select')[0];
+        select.name = 'empleado_' + contadorEmpleados; 
+    
+        original.parentNode.appendChild(clone);
+    
+        contadorEmpleados++;
+    }
+    </script>
+    
+    
+
+{% endblock %}
